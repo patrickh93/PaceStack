@@ -1,0 +1,32 @@
+# Java / Spring Boot
+target/
+*.class
+*.jar
+*.war
+
+# Maven wrapper files should usually be committed,
+# so we are NOT ignoring mvnw, mvnw.cmd, or .mvn/
+
+# Node / React
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Environment / local config files
+.env
+.env.local
+.env.*.local
+application-local.properties
+
+# OS files
+.DS_Store
+Thumbs.db
