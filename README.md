@@ -26,3 +26,14 @@ pacestack/
   frontend/
   README.md
   .gitignore
+
+## Planned Features
+-Add, view, update and delete runs
+-Calculate running pace
+-View weekly training summaries
+-Filter runs by type and date
+-Track shoe mileage
+
+##Status
+
+Initial project setup in progress.
