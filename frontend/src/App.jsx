@@ -1,6 +1,105 @@
 import "./App.css";
+import { useEffect, useState } from "react";
+import "./App.css";
+
+import RunForm from "./components/RunForm";
+import RunList from "./components/RunList";
+import { createRun, getRuns } from "./services/runService";
+
+const initialFormData = {
+  date: "",
+  distanceKm: "",
+  durationSeconds: "",
+  runType: "EASY",
+  notes: "",
+};
 
 function App() {
+  // Stores all runs loaded from the backend
+  const [runs, setRuns] = useState([]);
+
+  // Stores the current values typed into the 'Add Run' form
+  const [formData, setFormData] = useState(initialFormData);
+
+  //Stores a simple loading message while the backend request is running
+  const [isLoading, setIsLoading] = useState(false);
+
+  //Stores any error message from failed backend requests
+  const [errorMessage, setErrorMessage] = useState("");
+
+  /**
+   * Load all runs from the Spring boot backend
+   * This calls: GET http://localhost:8080/api/runs
+   */
+  async function loadRuns() {
+    try {
+      setIsLoading(true);
+      setErrorMessage("");
+
+      //this calls the getRuns function from runService.js which recieves all runs from the database. Then update setRuns with that data (array of objects)
+      const data = await getRuns();
+      setRuns(data);
+    } catch (error) {
+      setErrorMessage("Could not load runs. Make sure backend is running");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  /**
+   * Runs once when the App component first loads.
+   * This is how the frontend loads existing runs from the backend when the page first opens
+   */
+  useEffect(() => {
+    loadRuns();
+  }, []);
+
+  /**
+   * Updates formData whenever the user types into an input, selects a run type, or writes notes
+   * The inputs name decides which property to update
+   */
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  }
+
+  /**
+   * Handles the Add Run form submission
+   * This sends the form data to the backend using:
+   * POST http://localhost:8080/api/runs
+   */
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    //convert distance and seconds strings to integers
+    const newRun = {
+      ...formData,
+      distanceKm: Number(formData.distanceKm),
+      durationSeconds: Number(formData.durationSeconds),
+    };
+
+    try {
+      setErrorMessage("");
+
+      //this calls the createRuns function from runService.js passing in the inputed form data. sends it to the backend and stores it to the database. )
+      await createRun(newRun);
+
+      //reset form to blank
+      setFormData(initialFormData);
+
+      //calls get runs, which gets all runs from the database to update runs state
+      await loadRuns();
+    } catch (error) {
+      setErrorMessage("Could not save run. Check the form and backend.");
+      console.error(error);
+    }
+  }
+
   return (
     <div className="app">
       <aside className="sidebar">
@@ -23,6 +122,9 @@ function App() {
           </div>
         </header>
 
+        {/* display error messages if there are any */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+
         <section className="metric-grid">
           <div className="metric-card">
             <span className="metric-label">This Week Distance</span>
@@ -31,7 +133,7 @@ function App() {
 
           <div className="metric-card">
             <span className="metric-label">Runs</span>
-            <strong>0</strong>
+            <strong>{runs.length}</strong>
           </div>
 
           <div className="metric-card">
@@ -48,17 +150,16 @@ function App() {
         <section className="dashboard-grid">
           <div className="panel">
             <h2>Add Run</h2>
-            <p className="placeholder-text">
-              The run form will go here in the next version.
-            </p>
+            <RunForm
+              formData={formData}
+              onInputChange={handleInputChange}
+              onSubmit={handleSubmit}
+            />
           </div>
 
           <div className="panel">
             <h2>Recent Runs</h2>
-            <p className="placeholder-text">
-              Recent saved runs will appear here once the frontend connects to
-              the API.
-            </p>
+            {isLoading ? <p>Loading runs..</p> : <RunList runs={runs} />}
           </div>
         </section>
       </main>

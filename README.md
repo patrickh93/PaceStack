@@ -20,7 +20,15 @@ PaceStack is a full-stack running log app built with React, Spring Boot and MySQ
 
 ## Current Version
 
-v0.4.0 - React frontend foundation layout
+v0.5.0 - Frontend Add Run form connected to backend API
+
+## Version History
+
+-v0.1.0 - Initial project structure
+-v0.2.0 - Spring Boot backend setup
+-v0.3.0 - Backend Run CRUD API
+-v0.4.0 - React frontend foundation
+-v0.5.0 - Frontend Add Run form connected to backend API
 
 ## Project Structure
 
@@ -37,6 +45,7 @@ README.md
 -View weekly training summaries
 -Filter runs by type and date
 -Track shoe mileage
+-AI API to comment on runs
 
 ## Status
 
@@ -68,11 +77,15 @@ Current frontend features:
 -PaceStack dashboard shell
 -Dark sidebar navigation
 -Dashboard metric cards
--Add Run placeholder panel
--Recent Runs placeholder panel
+-Add Run form
+-API service layer for backend requests
+-Loads runs from the Spring Boot backend
+-Saves new runs to the MySql database through the backend API
 
 ### Run the Frontend
 
 ```bash
 npm install
 npm run dev
+
+

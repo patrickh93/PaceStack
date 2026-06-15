@@ -19,6 +19,8 @@ button {
   display: flex;
 }
 
+/* Dashboard CSS */
+
 .sidebar {
   width: 260px;
   background: #0f172a;
@@ -126,4 +128,104 @@ button {
 .placeholder-text {
   color: #64748b;
   line-height: 1.6;
+}
+
+/* RunForm CSS */
+.run-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.run-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.run-form input,
+.run-form select,
+.run-form textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #0f172a;
+  background-color: #ffffff;
+}
+
+.run-form input:focus,
+.run-form select:focus,
+.run-form textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.primary-button {
+  border: none;
+  border-radius: 12px;
+  padding: 13px 18px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #1d4ed8;
+}
+
+.error-message {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+/* RunList CSS */
+.run-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.run-list-header,
+.run-list-row {
+  display: grid;
+  grid-template-columns: 120px 110px 100px 110px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.run-list-header {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.run-list-row {
+  padding: 14px 0;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.run-list-row span:nth-child(2) {
+  display: inline-flex;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.85rem;
+  font-weight: 700;
 }
