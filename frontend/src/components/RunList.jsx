@@ -1,6 +1,6 @@
 import { formatDuration, formatRunType } from "../utils/runFormatters";
 
-function RunList({ runs }) {
+function RunList({ runs, onEditRun, onDeleteRun }) {
   if (runs.length === 0) {
     return <p className="placeholder-text">No runs saved yet</p>;
   }
@@ -28,6 +28,23 @@ function RunList({ runs }) {
           <span>{run.distanceKm}</span>
           <span>{formatDuration(run.durationSeconds)}</span>
           <span>{run.notes || "-"}</span>
+
+          <div className="run-actions">
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => onEditRun(run)}
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              className="danger-button"
+              onClick={() => onDeleteRun(run.id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/runs")
-@CrossOrigin(origins = "http://localhost:5178")
+@CrossOrigin(origins = "http://localhost:5179")
 public class RunController {
 
     private final RunService runService;

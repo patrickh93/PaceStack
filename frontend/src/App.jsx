@@ -4,7 +4,12 @@ import "./App.css";
 
 import RunForm from "./components/RunForm";
 import RunList from "./components/RunList";
-import { createRun, getRuns } from "./services/runService";
+import {
+  createRun,
+  getRuns,
+  updateRun,
+  deleteRun,
+} from "./services/runService";
 
 const initialFormData = {
   date: "",
@@ -26,6 +31,10 @@ function App() {
 
   //Stores any error message from failed backend requests
   const [errorMessage, setErrorMessage] = useState("");
+
+  //Stores the id of the run currently being edited
+  //null means we are adding a new run, not editing
+  const [editingRunId, setEditingRunId] = useState(null);
 
   /**
    * Load all runs from the Spring boot backend
@@ -77,7 +86,7 @@ function App() {
     e.preventDefault();
 
     //convert distance and seconds strings to integers
-    const newRun = {
+    const runToSave = {
       ...formData,
       distanceKm: Number(formData.distanceKm),
       durationSeconds: Number(formData.durationSeconds),
@@ -86,17 +95,78 @@ function App() {
     try {
       setErrorMessage("");
 
-      //this calls the createRuns function from runService.js passing in the inputed form data. sends it to the backend and stores it to the database. )
-      await createRun(newRun);
+      //No editing ID: calls the createRuns function from runService.js passing in the inputed form data. sends it to the backend and stores it to the database.
+      //Editing ID is not null, call update run function
+      if (editingRunId === null) {
+        await createRun(runToSave);
+      } else {
+        await updateRun(editingRunId, runToSave);
+      }
 
       //reset form to blank
       setFormData(initialFormData);
+
+      //set editing id back to null
+      setEditingRunId(null);
 
       //calls get runs, which gets all runs from the database to update runs state
       await loadRuns();
     } catch (error) {
       setErrorMessage("Could not save run. Check the form and backend.");
       console.error(error);
+    }
+  }
+
+  /**
+   * Function for editing runs
+   * Puts form in edit mode, populating the form input fields with existing run values
+   */
+  function handleEditRun(run) {
+    //set id to the run I'm editing
+    //putting form into edit mode
+    setEditingRunId(run.id);
+
+    //load the runs existing values into the for inputs
+    //convert numbers to strings
+    setFormData({
+      date: run.date,
+      distanceKm: String(run.distanceKm),
+      durationSeconds: String(run.durationSeconds),
+      runType: run.runType,
+      notes: run.notes || "",
+    });
+  }
+
+  /**
+   * Function for deleting runs
+   * Calls the deleteRun function from the runService.js file
+   */
+  async function handleDeleteRun(id) {
+    //show a browser confirmation popup
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this run?"
+    );
+
+    //if user clicks cancel, return and delete nothing
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setErrorMessage("");
+      await deleteRun(id);
+
+      //edge case if user is editing form and then deletes that run, clear the form and exit edit mode
+      if (editingRunId === id) {
+        setEditingRunId(null);
+        setFormData(initialFormData);
+      }
+
+      //call loadRuns() to update list of runs
+      await loadRuns();
+    } catch (e) {
+      setErrorMessage("Could not delete run. Make sure backend is running");
+      console.error(e);
     }
   }
 
@@ -159,7 +229,15 @@ function App() {
 
           <div className="panel">
             <h2>Recent Runs</h2>
-            {isLoading ? <p>Loading runs..</p> : <RunList runs={runs} />}
+            {isLoading ? (
+              <p>Loading runs..</p>
+            ) : (
+              <RunList
+                runs={runs}
+                onEditRun={handleEditRun}
+                onDeleteRun={handleDeleteRun}
+              />
+            )}
           </div>
         </section>
       </main>
