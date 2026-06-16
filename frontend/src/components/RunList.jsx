@@ -1,7 +1,15 @@
+import { formatDuration, formatRunType } from "../utils/runFormatters";
+
 function RunList({ runs }) {
   if (runs.length === 0) {
     return <p className="placeholder-text">No runs saved yet</p>;
   }
+
+  //Sort runs by date so the newest runs appear first
+  //rule for sort - return negative number then put a before b and vice versa
+  const sortedRuns = [...runs].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
 
   return (
     <div className="run-list">
@@ -13,12 +21,12 @@ function RunList({ runs }) {
         <span>Notes</span>
       </div>
 
-      {runs.map((run) => (
+      {sortedRuns.map((run) => (
         <div className="run-list-row" key={run.id}>
           <span>{run.date}</span>
-          <span>{run.runType}</span>
+          <span>{formatRunType(run.runType)}</span>
           <span>{run.distanceKm}</span>
-          <span>{run.durationSeconds}</span>
+          <span>{formatDuration(run.durationSeconds)}</span>
           <span>{run.notes || "-"}</span>
         </div>
       ))}

@@ -20,7 +20,7 @@ PaceStack is a full-stack running log app built with React, Spring Boot and MySQ
 
 ## Current Version
 
-v0.5.0 - Frontend Add Run form connected to backend API
+v0.6.0 - Improved run display formatting
 
 ## Version History
 
@@ -29,6 +29,7 @@ v0.5.0 - Frontend Add Run form connected to backend API
 -v0.3.0 - Backend Run CRUD API
 -v0.4.0 - React frontend foundation
 -v0.5.0 - Frontend Add Run form connected to backend API
+-v0.6.0 - Improved run display formatting
 
 ## Project Structure
 
@@ -81,6 +82,9 @@ Current frontend features:
 -API service layer for backend requests
 -Loads runs from the Spring Boot backend
 -Saves new runs to the MySql database through the backend API
+-Formats run duration from seconds into a readable time
+-Formats backend run type values into user friendly labels
+-Sort recent runs newest first
 
 ### Run the Frontend
 
