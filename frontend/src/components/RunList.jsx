@@ -34,7 +34,9 @@ function RunList({ runs, onEditRun, onDeleteRun }) {
           <span>{run.distanceKm} km</span>
           <span>{formatDuration(run.durationSeconds)}</span>
           <span>{formatPace(run.distanceKm, run.durationSeconds)}</span>
-          <span>{run.notes || "-"}</span>
+          <span className="notes-indicator" title={run.notes || "No Notes"}>
+            {run.notes ? "📝" : "-"}
+          </span>
 
           <div className="run-actions">
             <button

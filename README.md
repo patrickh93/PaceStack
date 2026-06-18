@@ -20,7 +20,7 @@ PaceStack is a full-stack running log app built with React, Spring Boot and MySQ
 
 ## Current Version
 
-v0.8.0 - Pace display and weekly dashboard stats 
+v0.9.0 - MVP polish and UI cleanup 
 
 ## Version History
 
@@ -32,6 +32,7 @@ v0.8.0 - Pace display and weekly dashboard stats
 -v0.6.0 - Improved run display formatting
 -v0.7.0 - Frontend edit and delete runs
 -v0.8.0 - Pace display and weekly dashboard stats
+-v0.9.0 - MVP polish and UI cleanup
 
 ## Project Structure
 
@@ -97,6 +98,12 @@ Current frontend features:
 -Calculates number of runs this week
 -Calculates this week's average pace
 -Replaces Longest Run dashboard card with Total Time
+-Shows a notes icon instead of long notes text in the run table
+-Uses a tooltip to preview run notes
+-Fixes horizontal page scrolling
+-Adds Cancel Edit functionality
+-Updates form heading and button text when editing
+-Improves dashboard table layout
 
 ### Run the Frontend
 

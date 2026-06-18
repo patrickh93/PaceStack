@@ -1,4 +1,10 @@
-function RunForm({ formData, onInputChange, onSubmit }) {
+function RunForm({
+  formData,
+  onInputChange,
+  onSubmit,
+  isEditing,
+  onCancelEdit,
+}) {
   return (
     <form className="run-form" onSubmit={onSubmit}>
       {/* This input shows the run date.
@@ -18,7 +24,6 @@ function RunForm({ formData, onInputChange, onSubmit }) {
           required
         />
       </label>
-
       <label>
         Distance (km)
         <input
@@ -32,7 +37,6 @@ function RunForm({ formData, onInputChange, onSubmit }) {
           required
         />
       </label>
-
       <label>
         Duration (seconds)
         <input
@@ -45,7 +49,6 @@ function RunForm({ formData, onInputChange, onSubmit }) {
           required
         />
       </label>
-
       <label>
         Run Type
         <select
@@ -61,7 +64,6 @@ function RunForm({ formData, onInputChange, onSubmit }) {
           <option value="RECOVERY">Recovery</option>
         </select>
       </label>
-
       <label>
         Notes
         <textarea
@@ -72,10 +74,20 @@ function RunForm({ formData, onInputChange, onSubmit }) {
           rows="4"
         />
       </label>
-
       <button type="submit" className="primary-button">
-        Save Run
+        {isEditing ? "Update Run" : "Save Run"}
       </button>
+
+      {/* Use type=button since its inside a form and default is submit */}
+      {isEditing && (
+        <button
+          type="button"
+          className="secondary-button"
+          onClick={onCancelEdit}
+        >
+          Cancel Edit
+        </button>
+      )}
     </form>
   );
 }

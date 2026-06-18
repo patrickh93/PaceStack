@@ -176,6 +176,12 @@ function App() {
     }
   }
 
+  //Cancel edit
+  function handleCancelEdit() {
+    setEditingRunId(null);
+    setFormData(initialFormData);
+  }
+
   return (
     <div className="app">
       <aside className="sidebar">
@@ -227,11 +233,13 @@ function App() {
 
         <section className="dashboard-grid">
           <div className="panel">
-            <h2>Add Run</h2>
+            <h2>{editingRunId === null ? "Add Run" : "Update Run"}</h2>
             <RunForm
               formData={formData}
               onInputChange={handleInputChange}
               onSubmit={handleSubmit}
+              onCancelEdit={handleCancelEdit}
+              isEditing={editingRunId !== null}
             />
           </div>
 
