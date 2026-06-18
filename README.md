@@ -212,3 +212,13 @@ Planned post-MVP improvements include:
 PaceStack is currently at MVP release stage.
 
 The app supports full CRUD functionality for runs and displays useful weekly running metrics through a React frontend connected to a Spring Boot and MySQL backend.
+
+## Screenshots
+
+### Dashboard
+
+![PaceStack dashboard](screenshots/dashboard.png)
+
+### Add and Edit Runs
+
+![PaceStack add and edit run form](screenshots/editrun.png)
