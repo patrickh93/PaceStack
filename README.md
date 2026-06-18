@@ -217,8 +217,8 @@ The app supports full CRUD functionality for runs and displays useful weekly run
 
 ### Dashboard
 
-![PaceStack dashboard](screenshots/dashboard.png)
+![PaceStack add and edit run form](screenshots/editrun.png)
 
 ### Add and Edit Runs
 
-![PaceStack add and edit run form](screenshots/editrun.png)
+![PaceStack dashboard](screenshots/dashboard.png)
