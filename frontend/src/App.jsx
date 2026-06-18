@@ -10,6 +10,9 @@ import {
   updateRun,
   deleteRun,
 } from "./services/runService";
+import { calculateWeeklyStats } from "./utils/runStats";
+
+import { formatPaceFromSeconds, formatDuration } from "./utils/runFormatters";
 
 const initialFormData = {
   date: "",
@@ -35,6 +38,9 @@ function App() {
   //Stores the id of the run currently being edited
   //null means we are adding a new run, not editing
   const [editingRunId, setEditingRunId] = useState(null);
+
+  //weekly stats variable
+  const weeklyStats = calculateWeeklyStats(runs);
 
   /**
    * Load all runs from the Spring boot backend
@@ -198,22 +204,24 @@ function App() {
         <section className="metric-grid">
           <div className="metric-card">
             <span className="metric-label">This Week Distance</span>
-            <strong>0 km</strong>
+            <strong>{weeklyStats.totalDistanceKm.toFixed(1)} km</strong>
           </div>
 
           <div className="metric-card">
-            <span className="metric-label">Runs</span>
-            <strong>{runs.length}</strong>
+            <span className="metric-label">Total Time</span>
+            <strong>{formatDuration(weeklyStats.totalDurationSeconds)}</strong>
           </div>
 
           <div className="metric-card">
-            <span className="metric-label">Longest Run</span>
-            <strong>0 km</strong>
+            <span className="metric-label">Runs This Week</span>
+            <strong>{weeklyStats.runCount}</strong>
           </div>
 
           <div className="metric-card">
             <span className="metric-label">Average Pace</span>
-            <strong>--:-- /km</strong>
+            <strong>
+              {formatPaceFromSeconds(weeklyStats.averagePaceSecondsPerKm)}
+            </strong>
           </div>
         </section>
 

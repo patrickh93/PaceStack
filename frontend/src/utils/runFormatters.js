@@ -24,10 +24,10 @@ export function formatDuration(durationSeconds) {
   if (hours > 0) {
     //Show minutes as two digits so "5" becomes "05" etc.
     const paddedMinutes = String(minutes).padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${paddedMinutes}:${paddedSeconds}`;
   }
 
-  return `${minutes}:${seconds}`;
+  return `${minutes}:${paddedSeconds}`;
 }
 
 /**
@@ -49,4 +49,64 @@ export function formatRunType(runType) {
   // If a matching label exists, return it.
   // If no matching label exists, just return the original runType.
   return labels[runType] || runType;
+}
+
+/**
+ * Calcules and formats average pace as minutes per kilometer
+ * Example:
+ * distanceKm = 8
+ * durationSeconds = 2310
+ *
+ * 2310 / 8 = 288.75 seconds per km
+ * 288.75 seconds = 4:49 /km
+ */
+export function formatPace(distanceKm, durationSeconds) {
+  const distance = Number(distanceKm);
+  const duration = Number(durationSeconds);
+
+  //check that distance and duration are valid numbers, otherwise return "--:--"
+  if (
+    !Number.isFinite(distance) ||
+    !Number.isFinite(duration) ||
+    distance <= 0 ||
+    duration <= 0
+  ) {
+    return "--:--/km";
+  }
+
+  //calculates pace (rounded)
+  const paceSecondsPerKm = Math.round(duration / distance);
+
+  const minutes = Math.floor(paceSecondsPerKm / 60);
+  const seconds = paceSecondsPerKm % 60;
+
+  const paddedSeconds = String(seconds).padStart(2, "0");
+
+  return `${minutes}:${paddedSeconds}/km`;
+}
+
+/**
+ * Formats a pace value that is already in seconds per km
+ * Example:
+ * 289 -> "4:49/km"
+ */
+export function formatPaceFromSeconds(paceSecondsPerKm) {
+  //convert to number
+  const pace = Number(paceSecondsPerKm);
+
+  //check number is valid
+  if (!Number.isFinite(pace) || pace <= 0) {
+    return "--:--/km";
+  }
+
+  //round pace to nearest integer
+  const roundedPace = Math.round(pace);
+
+  //get minutes and seconds
+  const minutes = Math.floor(roundedPace / 60);
+  const seconds = roundedPace % 60;
+
+  const paddedSeconds = String(seconds).padStart(2, "0");
+
+  return `${minutes}:${paddedSeconds} /km`;
 }
