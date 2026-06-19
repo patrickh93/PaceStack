@@ -16,7 +16,6 @@ function RunForm({
         <input
           type="date"
           name="date"
-          id=""
           // Whatever is stored in formData.date is what appears in the input initially
           value={formData.date}
           //When the user changes the date, call the onInputChange function to update formData
@@ -38,14 +37,13 @@ function RunForm({
         />
       </label>
       <label>
-        Duration (seconds)
+        Duration
         <input
-          type="number"
+          type="text"
           name="durationSeconds"
           value={formData.durationSeconds}
           onChange={onInputChange}
-          min="1"
-          placeholder="e.g. 2310"
+          placeholder="e.g. 38:30 or 1:12:45"
           required
         />
       </label>

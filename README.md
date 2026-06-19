@@ -6,7 +6,7 @@ The app allows runners to record training runs, view recent running history, edi
 
 ## Current Version
 
-v1.0.0 - MVP release
+v1.1.0 - Better duration input
 
 ## Tech Stack
 
@@ -194,6 +194,7 @@ http://localhost:5173
 - v0.8.0 - Pace display and weekly dashboard stats
 - v0.9.0 - MVP polish and UI cleanup
 - v1.0.0 - MVP release
+- v1.1.0 - Better duration input using "mm:ss" and "hh:mm:ss"
 
 ## Future Improvements
 

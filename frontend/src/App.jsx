@@ -1,6 +1,5 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import "./App.css";
 
 import RunForm from "./components/RunForm";
 import RunList from "./components/RunList";
@@ -12,7 +11,11 @@ import {
 } from "./services/runService";
 import { calculateWeeklyStats } from "./utils/runStats";
 
-import { formatPaceFromSeconds, formatDuration } from "./utils/runFormatters";
+import {
+  formatPaceFromSeconds,
+  formatDuration,
+  parseDurationToSeconds,
+} from "./utils/runFormatters";
 
 const initialFormData = {
   date: "",
@@ -91,11 +94,21 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    //convert distance and seconds strings to integers
+    //format seconds input
+    const parsedDurationSeconds = parseDurationToSeconds(
+      formData.durationSeconds
+    );
+
+    if (parsedDurationSeconds === null) {
+      setErrorMessage("Enter duration as mm:ss or hh:mm:ss.");
+      return;
+    }
+
+    //convert distance strings to integers
     const runToSave = {
       ...formData,
       distanceKm: Number(formData.distanceKm),
-      durationSeconds: Number(formData.durationSeconds),
+      durationSeconds: parsedDurationSeconds,
     };
 
     try {
@@ -137,7 +150,7 @@ function App() {
     setFormData({
       date: run.date,
       distanceKm: String(run.distanceKm),
-      durationSeconds: String(run.durationSeconds),
+      durationSeconds: formatDuration(run.durationSeconds),
       runType: run.runType,
       notes: run.notes || "",
     });

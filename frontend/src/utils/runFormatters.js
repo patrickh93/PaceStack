@@ -110,3 +110,58 @@ export function formatPaceFromSeconds(paceSecondsPerKm) {
 
   return `${minutes}:${paddedSeconds} /km`;
 }
+
+/**
+ * Converts a duration string into total seconds
+ * Acceped formats:
+ * "38:30" -> 2310 seconds
+ * Returns null if the input is invalid
+ */
+export function parseDurationToSeconds(durationText) {
+  //check for empty input
+  if (!durationText) {
+    return null;
+  }
+
+  //split the text by colons (puts them into an array eg "38:30" -> ["38", "30"]) and remove extra white space
+  const parts = durationText.split(":").map((part) => part.trim());
+
+  //check that the format has 2 or 3 parts
+  //only accept formats mm:ss / hh:mm:ss
+  if (parts.length < 2 || parts.length > 3) {
+    return null;
+  }
+
+  //convert strings to numbers
+  const numbers = parts.map((part) => Number(part));
+
+  //check if there is any invalid numbers
+  const hasInvalidNumber = numbers.some((number) => {
+    return !Number.isInteger(number) || number < 0;
+  });
+
+  //return null if any number is invald
+  if (hasInvalidNumber) {
+    return null;
+  }
+
+  //Handle the mm:ss format
+  if (parts.length === 2) {
+    const [minutes, seconds] = numbers;
+
+    if (seconds >= 60) {
+      return null;
+    }
+
+    return minutes * 60 + seconds;
+  }
+
+  //Handle the hh:mm:ss format
+  const [hours, minutes, seconds] = numbers;
+
+  if (minutes >= 60 || seconds >= 60) {
+    return null;
+  }
+
+  return hours * 3600 + minutes * 60 + seconds;
+}
