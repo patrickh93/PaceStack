@@ -246,3 +246,36 @@ The app supports full CRUD functionality for runs and displays useful weekly run
 ### Add and Edit Runs
 
 ![PaceStack dashboard](screenshots/dashboard.png)
+
+## What I Learned
+
+While building PaceStack, I learned how data moves through a full-stack application from a React form to a Spring Boot backend and into a MySQL database.
+
+Key things I learned include:
+
+- Building REST API endpoints with Spring Boot
+- Using a layered backend structure with controllers, services, repositories, and entities
+- Connecting React to a backend API using `fetch`
+- Managing form state in React
+- Passing data and functions between parent and child components using props
+- Handling create, read, update, and delete workflows
+- Formatting backend data for user-friendly display
+- Converting user-friendly duration input into seconds for storage and calculation
+- Calculating running metrics such as pace, weekly distance, total time, and average pace
+- Using Git branches and version tags to manage feature development
+
+## MVP vs Production Ready
+
+PaceStack is currently an MVP. It demonstrates the core full-stack workflow and running log functionality, but it is not production-ready yet.
+
+To make it production-ready, I would add:
+
+- User accounts and authentication
+- Backend validation for all request data
+- Automated frontend and backend tests
+- Pagination and filtering for large run histories
+- Better error handling and loading states
+- Database indexes for user and date-based queries
+- Deployment configuration
+- CI/CD pipeline
+- Logging and monitoring
