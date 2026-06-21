@@ -7,6 +7,12 @@ The goal of the app is to let runners record training runs, view their running h
 
 ## Tech Stack
 
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-Backend-brightgreen)
+![MySQL](https://img.shields.io/badge/MySQL-Database-orange)
+![Version](https://img.shields.io/badge/version-v1.1.0-blueviolet)
+![Status](https://img.shields.io/badge/status-MVP%20complete-success)
+
 - React
 - Java
 - Spring Boot
