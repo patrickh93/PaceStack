@@ -91,6 +91,23 @@ For example, when a user adds a run:
 6. The saved run is returned to the frontend as JSON.
 7. React reloads the run list and updates the dashboard.
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    A[React Frontend] -->|JSON HTTP requests| B[Spring Boot REST API]
+    B --> C[Controller Layer]
+    C --> D[Service Layer]
+    D --> E[Repository Layer]
+    E --> F[(MySQL Database)]
+
+    F --> E
+    E --> D
+    D --> C
+    C --> B
+    B -->|JSON responses| A
+```
+
 ## Project Structure
 
 ```text
@@ -186,23 +203,6 @@ The frontend runs at:
 
 ```text
 http://localhost:5173
-```
-
-## Architecture Diagram
-
-```mermaid
-flowchart LR
-    A[React Frontend] -->|JSON HTTP requests| B[Spring Boot REST API]
-    B --> C[Controller Layer]
-    C --> D[Service Layer]
-    D --> E[Repository Layer]
-    E --> F[(MySQL Database)]
-
-    F --> E
-    E --> D
-    D --> C
-    C --> B
-    B -->|JSON responses| A
 ```
 
 ## Version History
