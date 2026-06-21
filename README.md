@@ -188,6 +188,23 @@ The frontend runs at:
 http://localhost:5173
 ```
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    A[React Frontend] -->|JSON HTTP requests| B[Spring Boot REST API]
+    B --> C[Controller Layer]
+    C --> D[Service Layer]
+    D --> E[Repository Layer]
+    E --> F[(MySQL Database)]
+
+    F --> E
+    E --> D
+    D --> C
+    C --> B
+    B -->|JSON responses| A
+```
+
 ## Version History
 
 - v0.1.0 - Initial project structure
