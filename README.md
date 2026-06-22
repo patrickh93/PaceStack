@@ -12,6 +12,12 @@ v1.1.0 - Better duration input
 
 ### Frontend
 
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-Backend-brightgreen)
+![MySQL](https://img.shields.io/badge/MySQL-Database-orange)
+![Version](https://img.shields.io/badge/version-v1.1.0-blueviolet)
+![Status](https://img.shields.io/badge/status-MVP%20complete-success)
+
 - React
 - Vite
 - JavaScript
@@ -84,6 +90,23 @@ For example, when a user adds a run:
 5. Hibernate writes the run to the MySQL database.
 6. The saved run is returned to the frontend as JSON.
 7. React reloads the run list and updates the dashboard.
+
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    A[React Frontend] -->|JSON HTTP requests| B[Spring Boot REST API]
+    B --> C[Controller Layer]
+    C --> D[Service Layer]
+    D --> E[Repository Layer]
+    E --> F[(MySQL Database)]
+
+    F --> E
+    E --> D
+    D --> C
+    C --> B
+    B -->|JSON responses| A
+```
 
 ## Project Structure
 
@@ -223,3 +246,36 @@ The app supports full CRUD functionality for runs and displays useful weekly run
 ### Add and Edit Runs
 
 ![PaceStack dashboard](screenshots/dashboard.png)
+
+## What I Learned
+
+While building PaceStack, I learned how data moves through a full-stack application from a React form to a Spring Boot backend and into a MySQL database.
+
+Key things I learned include:
+
+- Building REST API endpoints with Spring Boot
+- Using a layered backend structure with controllers, services, repositories, and entities
+- Connecting React to a backend API using `fetch`
+- Managing form state in React
+- Passing data and functions between parent and child components using props
+- Handling create, read, update, and delete workflows
+- Formatting backend data for user-friendly display
+- Converting user-friendly duration input into seconds for storage and calculation
+- Calculating running metrics such as pace, weekly distance, total time, and average pace
+- Using Git branches and version tags to manage feature development
+
+## MVP vs Production Ready
+
+PaceStack is currently an MVP. It demonstrates the core full-stack workflow and running log functionality, but it is not production-ready yet.
+
+To make it production-ready, I would add:
+
+- User accounts and authentication
+- Backend validation for all request data
+- Automated frontend and backend tests
+- Pagination and filtering for large run histories
+- Better error handling and loading states
+- Database indexes for user and date-based queries
+- Deployment configuration
+- CI/CD pipeline
+- Logging and monitoring
